@@ -21,7 +21,7 @@ def getEq():
     """ This function prompts the user for a linear equation
         ax + by = z and returns a, b, and z as integers. """
     input_flag = False
-    while input_flag == False:
+    while not input_flag:
         eq = input("Enter an equation in the form ax + by = z\n")
         if validateEq(eq) == True:
             input_flag = True
@@ -66,13 +66,26 @@ def multiplyEq(x, y, z, c):
 
 def printEq(x, y, z, eq_num):
     print(str(round(x, SIG_DIGITS)) + "*x + " + str(round(y, SIG_DIGITS)) + "*y = " + str(round(z, SIG_DIGITS)) + "\t\t#" + str(eq_num))
+    
+def confirmValidPair(x1, y1, z1, x2, y2, z2):
+    if (z1 != z2):
+        if (x1 == x2) and (y1 == y2):
+            return False
+    else:
+        return True
 
 def stylizedElimination(x1, y1, z1, x2, y2, z2):
     printEq(x1, y1, z1, 1)
     printEq(x2, y2, z2, 2)
+    if not (confirmValidPair(x1, y1, z1, x2, y2, z2)):
+        print("this is not a valid simultaneous system of equations")
+        return 1
     print("\n")
     v = findVal(x1, x2)
-    print("Multiply both sides of Eq. 1 by " + str(x2) + "/" + str(x1))
+    if (x2 % x1 == 0):
+        print("Multiply both sides of Eq. 1 by " + str(v))
+    else:
+        print("Multiply both sides of Eq. 1 by " + str(x2) + "/" + str(x1))
     x3, y3, z3 = multiplyEq(x1, y1, z1, v)
     printEq(x3, y3, z3, 3)
     print("\n")
@@ -86,6 +99,7 @@ def stylizedElimination(x1, y1, z1, x2, y2, z2):
 
     if (abs((x1*x_f + y1*y_f) - z1) < SIG_DIGITS):
         print("Answer\t x = " + str(round(x_f, SIG_DIGITS)) + "\t y = " + str(round(y_f, SIG_DIGITS)))
+    return 0
 
 x1, y1, z1 = getEq()
 x2, y2, z2 = getEq()
