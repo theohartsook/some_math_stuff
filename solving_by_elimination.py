@@ -17,9 +17,20 @@ def validateEq(eq):
     else:
         return True
 
+def extractCoefficient(x, eq_var='x'):
+    """ This is a helper function so users can input x or -x
+        instead of 1x, -1x. """
+    if x == eq_var:
+        return 1
+    elif x == '-' + eq_var:
+        return -1
+    else:
+        return x[:-1]
+
 def getEq():
     """ This function prompts the user for a linear equation
-        ax + by = z and returns a, b, and z as integers. """
+        ax + by = z and returns a, b, and z as integers.
+        Whitespace between factors is required. """
     input_flag = False
     while not input_flag:
         eq = input("Enter an equation in the form ax + by = z\n")
@@ -27,22 +38,22 @@ def getEq():
             input_flag = True
         else:
             continue
-    if '+' in eq:
-        left_hand = eq.split('+')
-    elif '-' in eq:
-        left_hand = eq.split('-')
-    x = left_hand[0].strip()
-    if 'x' in x:
-        x = x[:-1]
-    right_hand = left_hand[-1].split('=')
-    y = right_hand[0].strip()
-    if 'y' in y:
-        y = y[:-1]
-    z = right_hand[-1].strip()
-    if '-' in eq:
-        return (int(x), -1 *int(y), int(z))
-    else:
-        return (int(x), int(y), int(z))
+    return(eq)
+
+def prepareEq(eq):
+    """ This function prepares an equation string with the same
+        format as getEq() for further computation. """
+    info = eq.split(' ')
+    x = info[0]
+    x = extractCoefficient(x, 'x')
+    op = info[1]
+    y = info[2]
+    y = extractCoefficient(y, 'y')
+    if op == '-':
+        y *= -1
+    z = info[-1]
+
+    return (int(x), int(y), int(z))
 
 def findVal(x1, x2):
     v = float(x2 / x1)
@@ -71,6 +82,8 @@ def confirmValidPair(x1, y1, z1, x2, y2, z2):
     if (z1 != z2):
         if (x1 == x2) and (y1 == y2):
             return False
+        else:
+            return True
     else:
         return True
 
@@ -78,6 +91,7 @@ def stylizedElimination(x1, y1, z1, x2, y2, z2):
     printEq(x1, y1, z1, 1)
     printEq(x2, y2, z2, 2)
     if not (confirmValidPair(x1, y1, z1, x2, y2, z2)):
+        print(confirmValidPair(x1, y1, z1, x2, y2, z2))
         print("this is not a valid simultaneous system of equations")
         return 1
     print("\n")
@@ -101,8 +115,12 @@ def stylizedElimination(x1, y1, z1, x2, y2, z2):
         print("Answer\t x = " + str(round(x_f, SIG_DIGITS)) + "\t y = " + str(round(y_f, SIG_DIGITS)))
     return 0
 
-x1, y1, z1 = getEq()
-x2, y2, z2 = getEq()
+# sample code
+"""
+eq1 = getEq()
+eq2= getEq()
+x1, y1, z1 = prepareEq(eq1)
+x2, y2, z2 = prepareEq(eq2)
 print("\n")
 stylizedElimination(x1, y1, z1, x2, y2, z2)
-
+"""
