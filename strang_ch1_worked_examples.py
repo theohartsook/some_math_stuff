@@ -3,6 +3,85 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+# this describes v and w
+'''
+xs = [0, 1, 100]
+ys = [0, 1, 100]
+zs = [0, 1, 100]
+flat = [0, 0, 0]
+
+plt3d = plt.figure().gca(projection='3d')
+plt3d.plot(xs, ys, flat)
+plt3d.plot(flat, ys, zs)
+plt3d.legend()
+
+plt.show()
+'''
+
+# this describes cv and dw
+
+'''
+c = list(range(0,6))
+d = list(range(0,6))
+
+v = [1,1,0]
+w = [0,1,1]
+test_xs = [2,5]
+test_ys = [3,7]
+test_zs = [1,2]
+xs = []
+ys = []
+zs = []
+
+for i in c:
+    for j in d:
+        xs.append(i)
+        ys.append(i+j)
+        zs.append(j)
+
+for i in range(0, len(xs)):
+    if xs[i] + zs[i]!= ys[i]:
+        print(xs[i], ys[i], zs[i])
+
+plt3d = plt.figure().gca(projection='3d')
+plt3d.scatter3D(xs, ys, zs, color='k')
+plt3d.scatter3D(test_xs, test_ys, test_zs, color='r')
+
+plt.show()
+'''
+
+# this describes cv + dw
+'''
+cv = []
+dw = []
+for i in c:
+    temp_cv = v*i
+    cv.append([i,i,0])
+    dw.append([0,i,i])
+
+plane = []
+xs = [2,5]
+ys = [3,7]
+zs = [1,2]
+for i in range(0, len(cv)):
+    x = cv[i][0] + dw[i][0]
+    y = cv[i][1] + dw[i][1]
+    z = cv[i][2] + dw[i][2]
+    xs.append(x)
+    ys.append(y)
+    zs.append(z)
+    plane.append([x,y,z])
+
+plt3d = plt.figure().gca(projection='3d')
+plt3d.scatter3D(xs, ys, zs, color='k')
+
+
+plt.show()
+'''
+
+
+# https://observablehq.com/@harrystevens/adding-three-dimensional-vectors
+'''
 x_ax = list(range(-100, 101, 1))
 y_ax = list(range(-100, 101, 1))
 z_ax = list(range(-100, 101, 1))
@@ -34,8 +113,8 @@ sample_y = [0, 3, 7]
 sample_z = [0, 1, 2]
 plt3d.scatter3D(sample_x, sample_y, sample_z, color='k')
 
-
 plt.show()
+'''
 
 '''
 # 1.1B
@@ -69,3 +148,5 @@ for x in pos_int_c:
 plt.xlim(-10,10)
 plt.show()
 '''
+
+#1.1C
