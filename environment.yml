@@ -1,0 +1,7 @@
+name: strang_examples
+channels:
+  - conda-forge
+dependencies:
+  - matplotlib
+  - numpy
+  - pandas
